@@ -1,0 +1,16 @@
+{
+    "python.autoComplete.extraPaths": [
+        "/home/deltax/ros2_ws/build/xrower_gps",
+        "/home/deltax/ros2_ws/install/xrower_gps/lib/python3.8/site-packages",
+        "/home/deltax/ros2_ws/install/turtlesim/lib/python3.8/site-packages",
+        "/home/deltax/ros2_ws/src/install/xrower_gps/lib/python3.8/site-packages",
+        "/opt/ros/foxy/lib/python3.8/site-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/deltax/ros2_ws/build/xrower_gps",
+        "/home/deltax/ros2_ws/install/xrower_gps/lib/python3.8/site-packages",
+        "/home/deltax/ros2_ws/install/turtlesim/lib/python3.8/site-packages",
+        "/home/deltax/ros2_ws/src/install/xrower_gps/lib/python3.8/site-packages",
+        "/opt/ros/foxy/lib/python3.8/site-packages"
+    ]
+}
