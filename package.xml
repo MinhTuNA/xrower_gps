@@ -7,8 +7,8 @@
   <maintainer email="viminhtu.101002@gmail.com">deltax</maintainer>
   <license>TODO: License declaration</license>
 
-  <depen>rclpy</depen>
-  <depen>std_msgs</depen>
+  <depend>rclpy</depend>
+  <depend>std_msgs</depend>
   
   <exec_depend>python3-socketio</exec_depend>
   <exec_depend>json</exec_depend>
