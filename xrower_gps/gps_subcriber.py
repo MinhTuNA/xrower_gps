@@ -40,10 +40,22 @@ class GPSSubcriberNode(Node):
                 "longitude": longitude,
             })
 
+    def connect_to_server(self):
+        try:
+            sio.connect("http://192.168.1.214:8901")
+            if sio.connected:
+                self.get_logger().info("Connected to Socket.IO server.")
+            else:
+                self.get_logger().warn("Failed to connect to Socket.IO server, continuing without connection.")
+        except socketio.exceptions.ConnectionError as e:
+            self.get_logger().error(f"ConnectionError: {e}. Continuing without connection.")
+        except Exception as e:
+            self.get_logger().error(f"An unexpected error occurred: {e}. Continuing without connection.")
+
 def main(args=None):
     rclpy.init(args=args)
     node = GPSSubcriberNode()
-    sio.connect("http://192.168.1.214:8901")
+    node.connect_to_server()
     rclpy.spin(node)
     node.destroy_node()
     rclpy.shutdown()
