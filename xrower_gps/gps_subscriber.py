@@ -21,23 +21,41 @@ def message(data):
 def disconnect():
     print("Disconnected from server")
 
-class GPSSubcriberNode(Node):
+class GPSSubscriberNode(Node):
     def __init__(self):
-        super().__init__("gps_subcriber_node")
+        super().__init__("gps_subscriber_node")
         self.create_subscription(String, 'gps_topic',self.gps_listener_callback,10)
         
     def gps_listener_callback(self,msg):
-        gps_data = json.loads(msg.data)
-        latitude = gps_data['latitude']
-        longitude = gps_data['longitude']
-        altitude = gps_data['altitude']
-        speed = gps_data['speed']
-        satellites = gps_data['satellites']
-        self.get_logger().info(msg.data)
+        data = json.loads(msg.data)
+        gps_data = data.get("gps", {})
+        latitude = gps_data.get('latitude', 'N/A')
+        longitude = gps_data.get('longitude', 'N/A')
+        altitude = gps_data.get('altitude', 'N/A')
+        speed = gps_data.get('speed', 'N/A')
+        satellites = gps_data.get('satellites', 'N/A')
+
+        compass_data = data.get("compass", {})
+        heading = compass_data.get('heading', 'N/A')
+        direction = compass_data.get('direction', 'N/A')
+        
+        self.get_logger().info(f"\nGPS Data:\n"
+                               f"Latitude: {latitude}\n"
+                               f"Longitude: {longitude}\n"
+                               f"Altitude: {altitude}\n"
+                               f"Speed: {speed}\n"
+                               f"Satellites: {satellites}\n"
+                               f"Compass Data:\n"
+                               f"Heading: {heading:.2f}°\n"
+                               f"Direction: {direction}")
+
         if sio.connected:
             sio.emit("DataFromROS2",{
                 "latitude": latitude,
                 "longitude": longitude,
+                "altitude": altitude,
+                "heading ": heading,
+                "direction": direction,
             })
 
     def connect_to_server(self):
@@ -54,7 +72,7 @@ class GPSSubcriberNode(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    node = GPSSubcriberNode()
+    node = GPSSubscriberNode()
     node.connect_to_server()
     rclpy.spin(node)
     node.destroy_node()
